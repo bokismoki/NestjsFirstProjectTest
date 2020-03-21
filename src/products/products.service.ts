@@ -17,8 +17,8 @@ export class ProductsService {
     }
 
     private findProduct(id: string): [Product, number] {
-        const productIndex = this.products.findIndex(product => product.id === id)
         const product = this.products.find(product => product.id === id)
+        const productIndex = this.products.findIndex(product => product.id === id)
         if (!product) {
             throw new NotFoundException('Could not find product')
         }
@@ -43,5 +43,10 @@ export class ProductsService {
             updatedProduct.price = price
         }
         this.products[index] = updatedProduct
+    }
+
+    deleteProduct(prodId: string) {
+        const [,index] = this.findProduct(prodId)
+        this.products.splice(index, 1)
     }
 }
