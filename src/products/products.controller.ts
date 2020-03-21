@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { ProductsService } from './products.service';
 
 @Controller('products')
@@ -17,5 +17,15 @@ export class ProductsController {
             prodPrice,
         );
         return { id: generatedId };
+    }
+
+    @Get()
+    getAllProducts() {
+        return this.productsService.fetchProducts()
+    }
+
+    @Get(':prodId')
+    getProduct(@Param('prodId') prodId: string) {
+        return this.productsService.getSingleProduct(prodId)
     }
 }
